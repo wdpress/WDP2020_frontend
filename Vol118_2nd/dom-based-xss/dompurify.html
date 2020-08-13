@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMPurify</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.12/purify.min.js"></script>
+</head>
+<body>
+    <script>
+        const dirty = decodeURIComponent(location.hash.substring(1))
+        console.log(dirty) // <img src onerror=alert(1) />
+        const clean = DOMPurify.sanitize(dirty)
+        console.log(clean) // <img src="">
+        document.querySelector('body').innerHTML = clean
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="redirect()">リダイレクト</button>
+    <script>
+      const trustedOrigins = [
+        "https://trusted.example.com",
+        "http://localhost:9999",
+      ];
+      function redirect() {
+        const urlParams = new URLSearchParams(location.search);
+        const to = decodeURIComponent(urlParams.get("to"));
+
+        const url = new URL(to, location.href);
+        if (!trustedOrigins.includes(url.origin)) {
+          console.error("リダイレクト先のURLは信頼されていません");
+          return;
+        }
+        location.href = to;
+      }
+      const redirectMap = {
+        home: "/home",
+        users: "/users",
+      };
+      const urlParams = new URLSearchParams(location.search);
+      const to = redirectMap[urlParams.get("to")];
+      if (!!to) {
+        location.href = to;
+      }
+    </script>
+  </body>
+</html>
